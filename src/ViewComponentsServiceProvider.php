@@ -2,17 +2,20 @@
 
 namespace Spatie\ViewComponents;
 
+use Illuminate\View\Factory;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComponentsServiceProvider extends ServiceProvider
 {
-    public $singletons = [
-        ComponentFactory::class => ComponentFactory::class,
-    ];
-
     public function boot()
     {
+        Factory::macro('renderViewComponent', function () {
+            $name = array_pop($this->componentStack);
+
+            return (app($name, $this->componentData($name)))->toHtml();
+        });
+
         $this->publishes([
             __DIR__.'/../config/view-components.php' => config_path('view-components.php'),
         ], 'config');
@@ -30,16 +33,6 @@ class ViewComponentsServiceProvider extends ServiceProvider
         Blade::directive(
             'endrender',
             $this->app->make(CompileEndRenderDirective::class)
-        );
-
-        Blade::directive(
-            'namedslot',
-            $this->app->make(CompileSlotDirective::class)
-        );
-
-        Blade::directive(
-            'endnamedslot',
-            $this->app->make(CompileEndSlotDirective::class)
         );
     }
 

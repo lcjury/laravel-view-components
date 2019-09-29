@@ -193,7 +193,7 @@ class Box implements Htmlable
 @endrender
 ```
 
-You can also use the `@namedslot` directive, and they will be injected in the component constructor matching the argument name with the slot name.
+You can also use the `@slot` directive, and they will be injected in the component constructor matching the argument name with the slot name.
 
 ### Configuration
 

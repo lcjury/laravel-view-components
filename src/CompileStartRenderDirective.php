@@ -10,6 +10,6 @@ final class CompileStartRenderDirective
         $componentPath = $expressionParts[0];
         $props = trim($expressionParts[1] ?? '[]');
 
-        return "<?php app(Spatie\ViewComponents\ComponentFactory::class)->startComponent(app(Spatie\ViewComponents\ComponentFinder::class)->find({$componentPath}), {$props}); ?>";
+        return "<?php \$__env->startComponent(app(Spatie\ViewComponents\ComponentFinder::class)->find({$componentPath}), {$props}) ?>";
     }
 }
