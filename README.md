@@ -170,6 +170,31 @@ class MyComponent implements Htmlable
 
 In the above example, `$color` is explicitly set, and a `$request` object will be injected by Laravel.
 
+### The `@startrender` and `@endrender` directive
+
+The `@startrender` directive exists to enable the usage of `slots` inside this package.
+
+Slots will be injected in the view components __construct methods. 
+
+```
+class Box implements Htmlable
+{
+    public function __construct(string $title, Htmlable $slot)
+    {
+        $this->title = $title;
+        $this->slot = $slot;
+    }
+}
+```
+
+```
+@startrender('Box', ['title' => 'box title'])
+   component contents
+@endrender
+```
+
+You can also use the `@namedslot` directive, and they will be injected in the component constructor matching the argument name with the slot name.
+
 ### Configuration
 
 #### The root namespace
